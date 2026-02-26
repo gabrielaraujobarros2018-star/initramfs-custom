@@ -1,1 +1,45 @@
+#!/bin/bash
 
+# Minimal Bash BusyBox for initramfs
+
+cmd="$(basename "$0")"
+
+# If called as "busybox <applet>"
+if [ "$cmd" = "busybox" ]; then
+    cmd="$1"
+    shift
+fi
+
+case "$cmd" in
+    sh)
+        exec /bin/bash "$@"
+        ;;
+    ls)
+        /bin/ls "$@"
+        ;;
+    mount)
+        /bin/mount "$@"
+        ;;
+    umount)
+        /bin/umount "$@"
+        ;;
+    mkdir)
+        /bin/mkdir "$@"
+        ;;
+    mknod)
+        /bin/mknod "$@"
+        ;;
+    echo)
+        /bin/echo "$@"
+        ;;
+    cat)
+        /bin/cat "$@"
+        ;;
+    dmesg)
+        /bin/dmesg "$@"
+        ;;
+    *)
+        echo "busybox: applet not found: $cmd"
+        exit 1
+        ;;
+esac
